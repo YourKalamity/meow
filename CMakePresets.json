@@ -1,0 +1,39 @@
+{
+  "version": 8,
+  "cmakeMinimumRequired": { "major": 3, "minor": 19 },
+  "vendor": { "jetbrains.com/clion": {}, "microsoft.com/vscode/cmake-tools": {} },
+
+  "configurePresets": [
+    {
+      "name": "debug",
+      "displayName": "Debug",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      }
+    },
+    {
+      "name": "release",
+      "displayName": "Release",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
+    },
+
+    {
+      "name": "debug-arm64-macos",
+      "inherits": "debug",
+      "displayName": "Debug (macOS arm64)",
+      "condition": { "type": "equals", "lhs": "${hostSystemName}", "rhs": "Darwin" },
+      "cacheVariables": {
+        "CMAKE_OSX_ARCHITECTURES": "arm64"
+      }
+    }
+  ],
+
+  "buildPresets": [
+    { "name": "debug", "configurePreset": "debug" },
+    { "name": "release", "configurePreset": "release" },
+    { "name": "debug-arm64-macos", "configurePreset": "debug-arm64-macos" }
+  ]
+}
